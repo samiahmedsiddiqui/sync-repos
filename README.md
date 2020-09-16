@@ -66,28 +66,28 @@ To sync from GitHub Repo to GitLab repo and vice versa or To use SSH for cloning
 
 ```bash
 # Without commit message
-./sync-repos.sh https://github.com/samiahmedsiddiqui/sync-repos-private.git https://gitlab.com/samiahmedsiddiqui/sync-repos.git
+./sync-repos.sh https://github.com/samiahmedsiddiqui/sync-repos-private.git develop https://gitlab.com/samiahmedsiddiqui/sync-repos.git master
 
 # With commit message
-./sync-repos.sh https://github.com/samiahmedsiddiqui/sync-repos-private.git https://gitlab.com/samiahmedsiddiqui/sync-repos.git Fetching latest updates
+./sync-repos.sh https://github.com/samiahmedsiddiqui/sync-repos-private.git develop https://gitlab.com/samiahmedsiddiqui/sync-repos.git master Fetching latest updates
 ```
 
 #### For GitHub (Clone through HTTPS)
 
 ```bash
 # Without commit message
-./sync-repos-github.sh samiahmedsiddiqui/sync-repos-private samiahmedsiddiqui/sync-repos 
+./sync-repos-github.sh samiahmedsiddiqui/sync-repos-private develop samiahmedsiddiqui/sync-repos master
 
 # With commit message
-./sync-repos-github.sh samiahmedsiddiqui/sync-repos-private samiahmedsiddiqui/sync-repos Fetching latest updates
+./sync-repos-github.sh samiahmedsiddiqui/sync-repos-private develop samiahmedsiddiqui/sync-repos master Fetching latest updates
 ```
 
 #### For GitLab (Clone through HTTPS)
 
 ```bash
 # Without commit message
-./sync-repos-gitlab.sh samiahmedsiddiqui/sync-repos-private samiahmedsiddiqui/sync-repos 
+./sync-repos-gitlab.sh samiahmedsiddiqui/sync-repos-private develop samiahmedsiddiqui/sync-repos master
 
 # With commit message
-./sync-repos-gitlab.sh samiahmedsiddiqui/sync-repos-private samiahmedsiddiqui/sync-repos Fetching latest updates
+./sync-repos-gitlab.sh samiahmedsiddiqui/sync-repos-private develop samiahmedsiddiqui/sync-repos master Fetching latest updates
 ```
