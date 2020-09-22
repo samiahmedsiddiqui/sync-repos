@@ -70,11 +70,11 @@ mkdir ${tempDir}
 cd ${tempDir}
 
 # Clone (sync FROM) repo
-git clone ${syncFromRepo} ${syncFromName}
+git clone -b ${syncFromBranch} ${syncFromRepo} ${syncFromName}
 
 if [ ! -d ${syncFromName} ];
 then
-  echo "${RED}${syncFromRepo} repo does not exist${NC}"
+  echo "${RED}${syncFromRepo} repo or ${syncFromBranch} branch does not exist${NC}"
   # Move out from the temporary directory
   cd ..
   # Deleting temporary directory
@@ -97,6 +97,9 @@ fi
 
 # Move to `sync TO` directory
 cd ${syncToName}
+
+# Checkout to a branch that needs to be synced (if not exist then create a new branch)
+git checkout -B ${syncToBranch}
 
 # Sync everything if file doesn't exisst ooon source then it gets deleted
 rsync -r --delete --exclude=.git ../../${syncFromName}/ ./
