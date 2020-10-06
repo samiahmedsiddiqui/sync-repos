@@ -155,23 +155,29 @@ fi
 # deleted if they do not exist at the source
 rsync -r --delete --exclude=.git ../../${SYNC_FROM_NAME}/ ./
 
-# Add all changes to stage
-git add -A
-
-# Captures a snapshot of the project's currently staged changes
-git commit --quiet -m "$COMMIT_MESSAGE"
-
-if [ ! -n "$BRANCH_EXISTS" ];
+STATUS=`git status`
+if [[ $STATUS == *"Changes not staged for commit"* ]];
 then
-  # Set branch to track to the upstream
-  git push --quiet --set-upstream origin $SYNC_TO_BRANCH
+  # Add all changes to stage
+  git add -A
+
+  # Captures a snapshot of the project's currently staged changes
+  git commit --quiet -m "$COMMIT_MESSAGE"
+
+  if [ ! -n "$BRANCH_EXISTS" ];
+  then
+    # Set branch to track to the upstream
+    git push --quiet --set-upstream origin $SYNC_TO_BRANCH
+  else
+    # Push changes to the upstream
+    git push --quiet
+  fi
+
+  echo "${GREEN}${SYNC_TO_BRANCH} branch of ${SYNC_TO_NAME} gets synced from the ${SYNC_FROM_BRANCH} branch of ${SYNC_FROM_NAME}${NC}"
 else
-  # Push changes to the upstream
-  git push --quiet
+  echo "${GREEN}Nothing to commit, Everything is already up-to-date in ${SYNC_TO_BRANCH} branch of ${SYNC_TO_NAME}${NC}"
 fi
 
 # Delete temporary directory
 delete_temp_dir
-
-echo "${GREEN}${SYNC_TO_BRANCH} branch of ${SYNC_TO_NAME} gets synced from the ${SYNC_FROM_BRANCH} branch of ${SYNC_FROM_NAME}${NC}"
 exit 0

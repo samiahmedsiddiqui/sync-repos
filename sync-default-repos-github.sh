@@ -79,17 +79,23 @@ cd $SYNC_TO_REPO
 # deleted if they do not exist at the source
 rsync -r --delete --exclude=.git ../../${SYNC_FROM_REPO}/ ./
 
-# Add all changes to stage
-git add -A
+STATUS=`git status`
+if [[ $STATUS == *"Changes not staged for commit"* ]];
+then
+  # Add all changes to stage
+  git add -A
 
-# Captures a snapshot of the project's currently staged changes
-git commit --quiet -m "$COMMIT_MESSAGE"
+  # Captures a snapshot of the project's currently staged changes
+  git commit --quiet -m "$COMMIT_MESSAGE"
 
-# Push changes to the upstream
-git push --quiet
+  # Push changes to the upstream
+  git push --quiet
+
+  echo "${GREEN}Default branch of ${SYNC_TO_REPO} gets synced from the default branch of ${SYNC_FROM_REPO}${NC}"
+else
+  echo "${GREEN}Nothing to commit, Everything is already up-to-date in default branch of ${SYNC_TO_REPO}${NC}"
+fi
 
 # Delete temporary directory
 delete_temp_dir
-
-echo "${GREEN}Default branch of ${SYNC_TO_REPO} gets synced from the default branch of ${SYNC_FROM_REPO}${NC}"
 exit 0
